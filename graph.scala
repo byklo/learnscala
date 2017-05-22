@@ -1,10 +1,9 @@
-import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Map
 
 // class for a directed graph
 
 case class Graph() {
-	private var adjacency_list = Map[Int, ListBuffer[Int]]()
+	private val adjacency_list = Map[Int, Vector[Int]]()
 
 	def edgeExists(v1: Int, v2: Int): Boolean = {
 		adjacency_list.get(v1) match {
@@ -15,17 +14,17 @@ case class Graph() {
 
 	def nodeExists(v1: Int): Boolean = if (adjacency_list.get(v1) == None) false else true
 
-	def addNode(v1: Int) { if (nodeExists(v1)) () else adjacency_list += (v1 -> ListBuffer[Int]()) }
+	def addNode(v1: Int) { if (nodeExists(v1)) () else adjacency_list += (v1 -> Vector[Int]()) }
 
 	def addEdge(v1: Int, v2: Int) {
-//		if (nodeExists(v1) && ! edgeExists(v1, v2))
-//			adjacency_list.get(v1).get() += v2
+		if (nodeExists(v1) && ! edgeExists(v1, v2))
+			adjacency_list += (v1 -> (adjacency_list(v1) :+ v2))
 	}
 
 	def print() {
 		adjacency_list.foreach{ case (key, list) => {
-			println(s"${key} :")
-			list.foreach{ x => println(s" ${x}") }
+			System.out.print(s"${key} :")
+			list.foreach{ x => System.out.print(s" ${x}") }
 			println()
 		}}
 	}
@@ -49,9 +48,5 @@ object Graph {
 		graph.addEdge(1, 8)
 		graph.addEdge(8, 2)
 		graph.print()
-
-		var list = Map[Int, ListBuffer[Int]]()
-		list += (5 -> ListBuffer[Int](4))
-		list.get(5).get().append(5)
 	}
 }
