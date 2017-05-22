@@ -1,2 +1,0 @@
-# learnscala
-educational scala scripts
